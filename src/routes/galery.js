@@ -4,13 +4,27 @@ const path = require('path');
 const { unlink } = require('fs-extra');
 const router = Router();
 
-// Models
+// Models clients
 const Image = require('../models/Image');
+
+router.get('/products', async (req, res) => {
+    const images = await Image.find();
+    res.render('galerys/galery-users', { images });
+});
+
+router.get('/products/image/:id', async (req, res) => {
+    const { id } = req.params;
+    const image = await Image.findById(id);
+    res.render('galerys/profile-users', { image });
+});
+
+//Models Administrador
 
 router.get('/galery', async (req, res) => {
     const images = await Image.find();
     res.render('galerys/all-galery', { images });
 });
+
 
 router.get('/galery/upload', (req, res) => {
     res.render('galerys/upload');
